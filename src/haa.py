@@ -1,9 +1,9 @@
-import numpy as np
-import pandas as pd
+
 import warnings
 import datetime
-from ffn import *
-import yfinance as yf
+from pandas import concat
+from ffn import to_price_index
+from yfinance import download
 warnings.filterwarnings("ignore")
 
 
@@ -16,8 +16,9 @@ protectives = ['TIP']
 number_of_assets = 4
 all_stocks = offensives + defensives + protectives
 end_date=datetime.date.today()
-# end_date = '2023-11-30'
-yahoo_data = yf.download(all_stocks, start='2021-01-22', end=end_date)['Adj Close'].pct_change().dropna()
+delta=datetime.timedelta(days=500)
+start_date=end_date-delta
+yahoo_data = download(all_stocks, start=start_date, end=end_date)['Adj Close'].pct_change().dropna()
 
 print("")
 print("Raw data:")
@@ -62,7 +63,7 @@ def pick_4_best_assets(x):
         a = len(pos_of_momentums)
         while a < number_of_assets:
             a += 1
-            pos_of_momentums = pd.concat([pos_of_momentums, def_momentum], axis=0)
+            pos_of_momentums = concat([pos_of_momentums, def_momentum], axis=0)
         return pos_of_momentums.index.to_list()
     else:
         return x[defensives].astype(float).idxmax()
