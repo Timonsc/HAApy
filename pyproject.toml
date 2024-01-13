@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "haapy"
+version = "0.1.0"
+description = ""
+authors = ["Timon, <t.d.schneider@protonmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10.2"
+numpy = "^1.26.2"
+pandas = "^2.1.4"
+ffn = "^1.0.0"
+yfinance = "^0.2.33"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
