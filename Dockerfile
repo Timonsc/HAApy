@@ -23,4 +23,6 @@ COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
 COPY src ./src
 
-ENTRYPOINT [ "python", "-m", "src/haa.py" ]
+WORKDIR /src
+
+ENTRYPOINT [ "python", "-m", "haa.py" ]
