@@ -73,7 +73,11 @@ prediction = score.join(absolute_momentum).apply(pick_4_best_assets, axis=1).dro
 
 print("")
 print("Prediction:")        
-print(prediction[-5:])
+print(prediction[:])
+
+print("")
+print("The allocation for", (prediction.index[-1] + datetime.timedelta(days=1)).date() ,"is", prediction[-1:].to_list())
+print("The allocation is only valid when the script is run on the last day of the month;", prediction.index[-1].date())
 
 exit(0)
 
