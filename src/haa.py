@@ -20,22 +20,24 @@ delta=datetime.timedelta(days=500)
 start_date=end_date-delta
 yahoo_data = download(all_stocks, start=start_date, end=end_date)['Adj Close'].pct_change().dropna()
 
-# print("")
-# print("Raw data:")
+# print("\nRaw data:")
 # print(yahoo_data[-10:])
 
 # Overwrite yahoo data with a the stocks' price index
 for column in yahoo_data.columns.to_list():
     yahoo_data[column] = yahoo_data[column].dropna().to_price_index()
 
-# print("")
-# print("Indexed data:")
+
+# print("\nIndexed data:")
 # print(yahoo_data[-5:])
 
 data_monthly = yahoo_data.resample('BM').last()
+# Replace last index date (which will be last day of the month) with today's date for clarity.
+data_monthly.rename(index={data_monthly.index[-1]:datetime.datetime.today()},inplace=True)
+data_monthly.index = data_monthly.index.strftime('%B %d, %Y')
 
-# print("")
-# print("Monthly change %")
+
+# print("\nMonthly change %")
 # print(data_monthly.pct_change().dropna()[-5:])
 
 # Calculate momentum score
@@ -44,8 +46,8 @@ of_score = score[offensives]
 def_score = score[defensives]
 prot_score = score[protectives]
 
-print("")
-print("Momentum scores:\n")
+
+print("\nMomentum scores:")
 print(score[-5:])
 
 # Calculate if there's absolute momentum (If protectives, TIP, have positive a positive momentum score)
@@ -71,12 +73,13 @@ def pick_4_best_assets(x):
 
 prediction = score.join(absolute_momentum).apply(pick_4_best_assets, axis=1).dropna()
 
-print("")
-print("Prediction:")        
+print("\nPrediction for next month:")        
 print(prediction[:])
 
-print("")
-print("The allocation for", (prediction.index[-1] + datetime.timedelta(days=1)).date() ,"is", prediction[-1:].to_list())
-print("The allocation is only valid when the script is run on the last day of the month;", prediction.index[-1].date())
+
+print("\nThe allocation for {} is {}. The Hybrid Asset Allocation strategy dictates to (re)allocate on the first trading day of the month.\n".format(datetime.datetime.today().strftime('%B %Y'), prediction[-2:].to_list()[0]))
+
+print("The last prediction in the table should is based on incomplete data for that month. Therefore it should only be used as an indicator for what the allocation might become next month.")
+
 
 exit(0)
