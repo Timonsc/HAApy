@@ -73,13 +73,13 @@ def pick_4_best_assets(x):
 
 prediction = score.join(absolute_momentum).apply(pick_4_best_assets, axis=1).dropna()
 
-print("\nPrediction for next month:")        
+print("\nPredictions for month after:")        
 print(prediction[:])
 
 
 print("\nThe allocation for {} is {}. The Hybrid Asset Allocation strategy dictates to (re)allocate on the first trading day of the month.\n".format(datetime.datetime.today().strftime('%B %Y'), prediction[-2:].to_list()[0]))
 
-print("The last prediction in the table should is based on incomplete data for that month. Therefore it should only be used as an indicator for what the allocation might become next month.")
+print("The last prediction in the table should is based on incomplete data for that month (unless it's the last day of the month). Therefore it should only be used as an indicator for what the next month's allocation might become.")
 
 
 exit(0)
