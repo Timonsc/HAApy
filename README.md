@@ -27,5 +27,5 @@ Requirements: python 3.10.2
 
 
 # References
-1. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4346906
-2. https://indexswingtrader.blogspot.com/2023/02/introducing-hybrid-asset-allocation-haa.html?m=1
+1. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4346906 (archived: https://archive.fo/KHvIs)
+2. https://indexswingtrader.blogspot.com/2023/02/introducing-hybrid-asset-allocation-haa.html?m=1 (archived: https://archive.fo/49D5i)
