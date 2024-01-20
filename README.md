@@ -14,7 +14,7 @@ Hybrid Asset Allocation is a tactical investing strategy designed by Wouter J. K
 See [1, 2] for further explanations.
 
 # Usage
-There's two options to run this script.
+There's three options to run this script.
 ## 1. Docker Compose
 Requirements: docker compose
 
@@ -24,6 +24,9 @@ Requirements: python 3.10.2
 * `pip install poetry==1.7.1`
 * `poetry shell`
 * `python ./src/haapy`
+
+## 3. Google Colab
+https://colab.research.google.com/drive/1bDtbPJI_ldW7JzfSbD7QZl3Nqw_Vvz8y?usp=sharing
 
 
 # References
