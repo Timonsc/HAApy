@@ -1,7 +1,7 @@
 
 import warnings
 import datetime
-from pandas import concat
+from pandas import concat, set_option
 from ffn import to_price_index
 from yfinance import download
 warnings.filterwarnings("ignore")
@@ -46,6 +46,7 @@ of_score = score[offensives]
 def_score = score[defensives]
 prot_score = score[protectives]
 
+set_option('display.max_columns', None)
 
 print("\nMomentum scores:")
 print(score[-5:])
@@ -73,15 +74,15 @@ def pick_4_best_assets(x):
 
 prediction = score.join(absolute_momentum).apply(pick_4_best_assets, axis=1).dropna()
 
-print("\nPredictions for month after:")        
+print("\nPredictions for month after:")
 print(prediction[:])
 
 
 print("\nThe allocation for {} is {}. The Hybrid Asset Allocation".format(datetime.datetime.today().strftime('%B %Y'), prediction[-2:].to_list()[0]))
 print("strategy dictates to (re)allocate on the first trading day of the month.\n")
 
-print("The last prediction in the table should is based on incomplete data for that month (unless it's")
-print("the last day of the month). Therefore it should only be used as an indicator for what the next")
+print("The last prediction in the table is based on incomplete data for that month (unless it's the")
+print("last day of the month). Therefore it should only be used as an indicator for what the next")
 print("month's allocation might become.")
 
 
