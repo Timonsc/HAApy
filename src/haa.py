@@ -18,7 +18,21 @@ all_stocks = offensives + defensives + protectives
 end_date=datetime.date.today()
 delta=datetime.timedelta(days=500)
 start_date=end_date-delta
-yahoo_data = download(all_stocks, start=start_date, end=end_date)['Adj Close'].pct_change().dropna()
+
+# Download the daily stock data
+data = download(all_stocks, start=start_date, end=end_date)['Adj Close']
+# Download today's intra day data, 1 minute interval. Keep only the last data point.
+todays_data = download(all_stocks, period='1d', interval='1m')['Adj Close'].iloc[-1].to_frame().T
+
+# If today_data contains more recent data points than the daily data, add today's intra day data to the dataset.
+# This allows taking today's data into account when calculating the momentum score.
+if data.index[-1].date() != todays_data.index[-1].date():
+    print("Adding today's intra day data to the dataset")
+    # Set the index to the next day
+    todays_data.index = [data.index[-1] + datetime.timedelta(days=1)]
+    data = concat([data,  todays_data], axis=0)
+
+yahoo_data = data.pct_change().dropna()
 
 # print("\nRaw data:")
 # print(yahoo_data[-10:])
