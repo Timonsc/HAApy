@@ -6,6 +6,7 @@ from ffn import to_price_index
 from yfinance import download
 warnings.filterwarnings("ignore")
 
+
 def predict_haa(end_date: datetime.date = datetime.date.today()):
     """
     Returns the investment signal for the Hybrid Asset Allocation strategy.
@@ -17,10 +18,6 @@ def predict_haa(end_date: datetime.date = datetime.date.today()):
         dict: A dictionary containing the prediction signal.
 
     """
-    name = "Default Haa"
-
-    # Rest of the code...
-def predict_haa(end_date: datetime.date = datetime.date.today()):
     name = "Default Haa"
 
     # Inputs
@@ -71,9 +68,6 @@ def predict_haa(end_date: datetime.date = datetime.date.today()):
 
     # Calculate momentum score
     score = sum([(data_monthly / data_monthly.shift(m) - 1) / 4 for m in [1,3,6,12]]).dropna()
-    of_score = score[offensives]
-    def_score = score[defensives]
-    prot_score = score[protectives]
 
     set_option('display.max_columns', None)
 
